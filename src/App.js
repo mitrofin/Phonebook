@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import ContactForm from './components/ContactForm/ContactForm';
+import ContactForm from './components/ContactForm';
 import ContactList from './components/ContactList';
 export default class App extends Component {
   state = {
@@ -11,6 +11,17 @@ export default class App extends Component {
       return {
         contacts: [...prevState.contacts, contactObj],
       };
+    });
+  };
+  handleDeleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
+  handleFilterChange = filter => {
+    this.setState({
+      filter,
     });
   };
 
@@ -29,7 +40,10 @@ export default class App extends Component {
         <ContactForm onSubmit={this.handleSubmit} />
         <h2>Contacts:</h2>
         {filteredContactsList.length > 0 && (
-          <ContactList contacts={filteredContactsList} />
+          <ContactList
+            contacts={filteredContactsList}
+            onDeleteButtonClick={this.handleDeleteContact}
+          />
         )}
       </div>
     );

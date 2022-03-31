@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import s from './ContactList.module.scss';
 
-export default function ContactList({ contacts }) {
+export default function ContactList({ contacts, onDeleteButtonClick }) {
   return (
     <ul className={s.contactsList}>
       {contacts.map(contact => (
@@ -13,7 +13,7 @@ export default function ContactList({ contacts }) {
             type="button"
             id={contact.id}
             className={s.deleteButton}
-            /* onClick={e => onDeleteButtonClick(e.target.id)} */
+            onClick={e => onDeleteButtonClick(e.target.id)}
           >
             Delete
           </button>
