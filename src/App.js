@@ -1,6 +1,10 @@
 import { Component } from 'react';
 import ContactForm from './components/ContactForm';
 import ContactList from './components/ContactList';
+import Filter from './components/Filter';
+
+import s from './index.css';
+
 export default class App extends Component {
   state = {
     contacts: [],
@@ -36,9 +40,16 @@ export default class App extends Component {
     const filteredContactsList = this.getFilteredContactsList();
     return (
       <div>
-        <h1>Phonebook</h1>
+        <h1 className={s.title}>Phonebook</h1>
         <ContactForm onSubmit={this.handleSubmit} />
-        <h2>Contacts:</h2>
+        <h2 className={s.title}>Contacts:</h2>
+        {contacts.length > 1 && (
+          <Filter
+            initialValue={filter}
+            onFilterChange={this.handleFilterChange}
+          />
+        )}
+
         {filteredContactsList.length > 0 && (
           <ContactList
             contacts={filteredContactsList}
