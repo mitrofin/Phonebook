@@ -4,8 +4,8 @@ import s from './ContactList.module.scss';
 export default function ContactList({ contacts, onDeleteButtonClick }) {
   return (
     <ul className={s.contactsList}>
-      {contacts.map(contact => (
-        <li key={contact.id} className={/* idx % 2 === 0 ? s.even :  */ s.odd}>
+      {contacts.map((contact, idx) => (
+        <li key={contact.id} className={idx % 2 === 0 ? s.even : s.odd}>
           <span>
             {contact.name}: {contact.number}
           </span>
