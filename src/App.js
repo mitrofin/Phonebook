@@ -11,6 +11,9 @@ export default class App extends Component {
     filter: '',
   };
   handleSubmit = contactObj => {
+    if (this.state.contacts.some(({ name }) => name === contactObj.name)) {
+      return alert(`${contactObj.name} already exists in your phonebook`);
+    }
     this.setState(prevState => {
       return {
         contacts: [...prevState.contacts, contactObj],
@@ -43,17 +46,17 @@ export default class App extends Component {
         <h1 className={s.title}>Phonebook</h1>
         <ContactForm onSubmit={this.handleSubmit} />
         <h2 className={s.title}>Contacts:</h2>
-        {contacts.length > 1 && (
-          <Filter
-            initialValue={filter}
-            onFilterChange={this.handleFilterChange}
-          />
-        )}
 
         {filteredContactsList.length > 0 && (
           <ContactList
             contacts={filteredContactsList}
             onDeleteButtonClick={this.handleDeleteContact}
+          />
+        )}
+        {contacts.length > 1 && (
+          <Filter
+            initialValue={filter}
+            onFilterChange={this.handleFilterChange}
           />
         )}
       </div>
