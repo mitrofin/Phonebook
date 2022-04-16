@@ -1,8 +1,6 @@
-import { Component } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import * as yup from 'yup';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
-import PropTypes from 'prop-types';
 import s from './ContactForm.module.scss';
 
 uuidv4();
@@ -15,44 +13,69 @@ const validationSchema = yup.object({
     .required("Enter contact's phone"),
 });
 
-export default class ContactForm extends Component {
-  static propTypes = {
-    onSubmit: PropTypes.func.isRequired,
+export default function ContactForm({ onSubmit }) {
+  /*   const [setName] = useState('');
+  const [setNumber] = useState('');
+
+  const handleInput = e => {
+    const { name, value } = e.target;
+
+    switch (name) {
+      case 'name':
+        setName(value);
+        break;
+      case 'number':
+        setNumber(value);
+        break;
+
+      default:
+        return;
+    }
+  };
+ */
+  /*   const handleSubmit = event => {
+    event.preventDefault();
+
+    onSubmit({ name, number });
+    resetInput();
   };
 
-  state = { name: '', number: '' };
-  render() {
-    return (
-      <Formik
-        initialValues={{ name: '', number: '' }}
-        validationSchema={validationSchema}
-        onSubmit={({ name, number }, { resetForm, setSubmitting }) => {
-          this.props.onSubmit({ name, number, id: uuidv4() });
-          setSubmitting(false);
-          resetForm();
-        }}
-      >
-        <Form className={s.contactForm}>
-          <label className={s.nameLabel}>
-            Name:
-            <Field type="text" name="name" className={s.contactFormInput} />
-            <span className={s.errorMessage}>
-              <ErrorMessage name="name" />
-            </span>
-          </label>
-          <label className={s.numberLabel}>
-            Number:
-            <Field type="tel" name="number" className={s.contactFormInput} />
-            <span className={s.errorMessage}>
-              <ErrorMessage name="number" />
-            </span>
-          </label>
+  const resetInput = () => {
+    setName('');
+    setNumber('');
+  }; */
 
-          <button type="submit" className={s.submitButton}>
-            Add contact
-          </button>
-        </Form>
-      </Formik>
-    );
-  }
+  return (
+    <Formik
+      initialValues={{ name: '', number: '' }}
+      validationSchema={validationSchema}
+      onSubmit={({ name, number }, { resetForm, setSubmitting }) => {
+        onSubmit({ name, number, id: uuidv4() });
+        setSubmitting(false);
+        resetForm();
+        /* handleInput(); */
+      }}
+    >
+      <Form className={s.contactForm}>
+        <label className={s.nameLabel}>
+          Name:
+          <Field type="text" name="name" className={s.contactFormInput} />
+          <span className={s.errorMessage}>
+            <ErrorMessage name="name" />
+          </span>
+        </label>
+        <label className={s.numberLabel}>
+          Number:
+          <Field type="tel" name="number" className={s.contactFormInput} />
+          <span className={s.errorMessage}>
+            <ErrorMessage name="number" />
+          </span>
+        </label>
+
+        <button type="submit" className={s.submitButton}>
+          Add contact
+        </button>
+      </Form>
+    </Formik>
+  );
 }
