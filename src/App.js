@@ -1,15 +1,14 @@
-import { useState, useEffect } from 'react';
+/* import { useState } from 'react'; */
 import ContactForm from './components/ContactForm';
 import ContactList from './components/ContactList';
 import Filter from './components/Filter';
-
-import s from './index.css';
+import Section from './components/Section/section';
 
 const App = () => {
-  const [contacts, setContacts] = useState([]);
-  const [filter, setFilter] = useState('');
+  /* const [contacts, setContacts] = useState([]); */
+  /* const [filter, setFilter] = useState(''); */
 
-  useEffect(() => {
+  /*   useEffect(() => {
     const contacts = localStorage.getItem('contacts');
     const parsedContacts = JSON.parse(contacts);
     if (parsedContacts) {
@@ -19,7 +18,7 @@ const App = () => {
 
   useEffect(() => {
     localStorage.setItem('contacts', JSON.stringify(contacts));
-  }, [contacts]);
+  }, [contacts]); */
 
   /* const handleSubmit = ({ name, number }) => {
     if (name.some({ name } === name)) {
@@ -28,7 +27,7 @@ const App = () => {
     setContacts(prevState => [...prevState, contacts]);
   }; */
 
-  const handleSubmit = ({ name, number, id }) => {
+  /*   const handleSubmit = ({ name, number, id }) => {
     const contact = {
       id,
       name,
@@ -37,20 +36,20 @@ const App = () => {
     if (contacts.some(contact => contact.name === name)) {
       return alert(`${name} already exists in your phonebook`);
     }
-    setContacts(prevState => [...prevState, contact]);
-    /*     const contact = {
-      id,
-      name,
-      number,
-    };
-    const alreadyFind = contacts.find(contact => contact.name === name);
+    //setContacts(prevState => [...prevState, contact]);
+     //   const contact = {
+      //id,
+      //name,
+      //number,
+    //};
+    //const alreadyFind = contacts.find(contact => contact.name === name);
 
-    alreadyFind
-      ? alert(`${name} is already in contacts.`)
-      : setContacts(prevState => [...prevState], contact); */
-  };
+    //alreadyFind
+      //? alert(`${name} is already in contacts.`)
+      //: setContacts(prevState => [...prevState], contact);
+  }; */
 
-  const handleDeleteContact = id => {
+  /* const handleDeleteContact = id => {
     setContacts(contacts.filter(contact => contact.id !== id));
   };
 
@@ -62,7 +61,7 @@ const App = () => {
     return contacts.filter(contact =>
       contact.name.toLowerCase().includes(filter.toLowerCase()),
     );
-  };
+  }; */
   /* const getFilteredContactsList = () => {
     const normalizedFilter = filter.toLowerCase();
 
@@ -75,19 +74,26 @@ const App = () => {
 
   return (
     <div>
-      <h1 className={s.title}>Phonebook</h1>
-      <ContactForm onSubmit={handleSubmit} />
-      <h2 className={s.title}>Contacts:</h2>
+      {/* <h1 className={s.title}>Phonebook</h1> */}
+      <Section title="Phonebook">
+        <ContactForm /* onSubmit={handleSubmit} */ />
+        <Filter />
+      </Section>
 
-      {getFilteredContactsList().length > 0 && (
+      {/* <h2 className={s.title}>Contacts:</h2> */}
+      <Section title="Saved contacts">
+        <ContactList />
+      </Section>
+
+      {/* {getFilteredContactsList().length > 0 && (
         <ContactList
           contacts={getFilteredContactsList()}
           onDeleteButtonClick={handleDeleteContact}
         />
-      )}
-      {contacts.length > 1 && (
+      )} */}
+      {/* {contacts.length > 1 && (
         <Filter initialValue={filter} onFilterChange={handleFilterChange} />
-      )}
+      )} */}
     </div>
   );
 };
