@@ -1,21 +1,25 @@
 import { v4 as uuidv4 } from 'uuid';
-import * as yup from 'yup';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import actions from '../../redux/contacts/contacts-action';
+/* import * as yup from 'yup'; */
+/* import { Formik, Form, Field, ErrorMessage } from 'formik'; */
 import s from './ContactForm.module.scss';
 
 uuidv4();
 
-const validationSchema = yup.object({
+/* const validationSchema = yup.object({
   name: yup.string().required("Enter contact's name"),
   number: yup
     .string()
     .length(10, 'Example: 0930939393')
     .required("Enter contact's phone"),
-});
+}); */
 
-export default function ContactForm({ onSubmit }) {
-  /*   const [setName] = useState('');
-  const [setNumber] = useState('');
+export default function ContactForm(/* { onSubmit } */) {
+  const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
+  const dispatch = useDispatch();
 
   const handleInput = e => {
     const { name, value } = e.target;
@@ -32,50 +36,61 @@ export default function ContactForm({ onSubmit }) {
         return;
     }
   };
- */
-  /*   const handleSubmit = event => {
-    event.preventDefault();
 
-    onSubmit({ name, number });
+  const handleSubmit = event => {
+    event.preventDefault();
+    dispatch(actions.addContact({ name, number }));
     resetInput();
   };
 
   const resetInput = () => {
     setName('');
     setNumber('');
-  }; */
+  };
 
   return (
-    <Formik
-      initialValues={{ name: '', number: '' }}
-      validationSchema={validationSchema}
-      onSubmit={({ name, number }, { resetForm, setSubmitting }) => {
-        onSubmit({ name, number, id: uuidv4() });
-        setSubmitting(false);
-        resetForm();
-        /* handleInput(); */
-      }}
+    <form
+      className={s.contactForm}
+      onSubmit={handleSubmit}
+      /* validationSchema={validationSchema} */
     >
-      <Form className={s.contactForm}>
-        <label className={s.nameLabel}>
-          Name:
-          <Field type="text" name="name" className={s.contactFormInput} />
-          <span className={s.errorMessage}>
-            <ErrorMessage name="name" />
-          </span>
-        </label>
-        <label className={s.numberLabel}>
-          Number:
-          <Field type="tel" name="number" className={s.contactFormInput} />
-          <span className={s.errorMessage}>
-            <ErrorMessage name="number" />
-          </span>
-        </label>
+      <label className={s.nameLabel}>
+        Name:
+        <input
+          className={s.contactFormInput}
+          id={uuidv4()}
+          type="text"
+          name="name"
+          value={name}
+          onChange={handleInput}
+          pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
+          required
+        />
+        {/* <Field type="text" name="name" className={s.contactFormInput} /> */}
+        <span className={s.errorMessage}>
+          {/* <ErrorMessage name="name" /> */}
+        </span>
+      </label>
+      <label className={s.numberLabel}>
+        Number:
+        {/* <Field type="tel" name="number" className={s.contactFormInput} /> */}
+        <input
+          type="tel"
+          name="number"
+          className={s.contactFormInput}
+          value={number}
+          onChange={handleInput}
+          pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
+          required
+        />
+        <span className={s.errorMessage}>
+          {/* <ErrorMessage name="number" /> */}
+        </span>
+      </label>
 
-        <button type="submit" className={s.submitButton}>
-          Add contact
-        </button>
-      </Form>
-    </Formik>
+      <button type="submit" className={s.submitButton}>
+        Add contact
+      </button>
+    </form>
   );
 }
