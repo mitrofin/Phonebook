@@ -1,5 +1,5 @@
 import { createAction } from '@reduxjs/toolkit';
-import { v4 as uuidv4 } from 'uuid';
+/* import { v4 as uuidv4 } from 'uuid';
 uuidv4();
 
 const addContact = createAction('contacts/add', ({ name, number }) => ({
@@ -10,8 +10,8 @@ const addContact = createAction('contacts/add', ({ name, number }) => ({
   },
 }));
 
-const deleteContact = createAction('contacts/delete');
-const filterContact = createAction('contacts/filter');
+const deleteContact = createAction('contacts/delete'); */
+export const filterContact = createAction('contacts/filter');
 
-const contactsAction = { addContact, deleteContact, filterContact };
-export default contactsAction;
+/* const contactsAction = { addContact, deleteContact, filterContact }; */
+/* export default filterContact; */
