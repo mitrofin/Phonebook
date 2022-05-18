@@ -1,13 +1,15 @@
 import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
-import actions from '../../redux/contacts/contacts-action';
+/* import actions from '../../redux/contacts/contacts-action'; */
 import s from './ContactList.module.scss';
-import { getFilteredContacts } from '../../redux/contacts/contacts-selectors';
+/* import { getFilteredContacts } from '../../redux/contacts/contacts-selectors'; */
+import { contactsSelectors, contactsOperation } from '../../redux/contacts';
 const ContactList = () => {
-  const contacts = useSelector(getFilteredContacts);
+  const contacts = useSelector(contactsSelectors.getFilteredContacts);
   /*   const contacts = useSelector(state => state.contacts.items);
   const filter = useSelector(state => state.contacts.filter); */
   const dispatch = useDispatch();
+  const onDeleteContact = id => dispatch(contactsOperation.deleteContact(id));
 
   /* const getFilteredContactsList = (allcontacts, filter) => {
     const normalizedFilter = filter.toLowerCase();
@@ -35,7 +37,7 @@ const ContactList = () => {
             type="button"
             id={id}
             className={s.deleteButton}
-            onClick={() => dispatch(actions.deleteContact(id))}
+            onClick={() => onDeleteContact(id)}
           >
             Delete
           </button>
