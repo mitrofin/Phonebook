@@ -1,7 +1,9 @@
 import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import actions from '../../redux/contacts/contacts-action';
+import { useDispatch, useSelector } from 'react-redux';
+import { contactsSelectors, contactsOperation } from '../../redux/contacts';
+
+import { toast } from 'react-toastify';
 /* import * as yup from 'yup'; */
 /* import { Formik, Form, Field, ErrorMessage } from 'formik'; */
 import s from './ContactForm.module.scss';
@@ -16,10 +18,24 @@ uuidv4();
     .required("Enter contact's phone"),
 }); */
 
+/* [addContact.fulfilled]: (state, { payload }) =>
+    state.some(({ name }) => name === payload.name)
+      ? toast(`${payload.name} already exists in your phonebook`)
+      : [...state, payload], */
+
 export default function ContactForm(/* { onSubmit } */) {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
+  const contacts = useSelector(contactsSelectors.getContacts);
   const dispatch = useDispatch();
+
+  const addFilterContact = contact => {
+    const contactFind = contacts.some(({ name }) => name === contact.name);
+
+    contactFind
+      ? toast(` ${name} already exists in your phonebook`)
+      : dispatch(contactsOperation.addContact(contact));
+  };
 
   const handleInput = e => {
     const { name, value } = e.target;
@@ -39,7 +55,7 @@ export default function ContactForm(/* { onSubmit } */) {
 
   const handleSubmit = event => {
     event.preventDefault();
-    dispatch(actions.addContact({ name, number }));
+    addFilterContact({ name, number });
     resetInput();
   };
 
