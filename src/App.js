@@ -3,8 +3,21 @@ import ContactForm from './components/ContactForm';
 import ContactList from './components/ContactList';
 import Filter from './components/Filter';
 import Section from './components/Section/section';
+import Container from './components/Container/container';
+import { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { contactsSelectors, contactsOperation } from './redux/contacts';
+import { toast, ToastContainer } from 'react-toastify';
+import { TailSpin } from 'react-loader-spinner';
+import 'react-toastify/dist/ReactToastify.css';
 
 const App = () => {
+  const dispatch = useDispatch();
+  const isLoading = useSelector(contactsSelectors.getIsLoading);
+  const isError = useSelector(contactsSelectors.getError);
+
+  useEffect(() => dispatch(contactsOperation.getContacts()), [dispatch]);
+
   /* const [contacts, setContacts] = useState([]); */
   /* const [filter, setFilter] = useState(''); */
 
@@ -73,16 +86,29 @@ const App = () => {
   /* const filteredContactsList = getFilteredContactsList(); */
 
   return (
-    <div>
+    <Container>
       {/* <h1 className={s.title}>Phonebook</h1> */}
       <Section title="Phonebook">
         <ContactForm /* onSubmit={handleSubmit} */ />
         <Filter />
+
+        <ToastContainer autoClose={1500} />
+        {isError && toast.error('We were unable to load contacts!')}
       </Section>
 
       {/* <h2 className={s.title}>Contacts:</h2> */}
       <Section title="Saved contacts">
+        {isLoading && (
+          <TailSpin
+            heigth="150"
+            width="150"
+            color="#006280"
+            ariaLabel="loading"
+            y="150px"
+          />
+        )}
         <ContactList />
+        <ToastContainer autoClose={1500} />
       </Section>
 
       {/* {getFilteredContactsList().length > 0 && (
@@ -94,7 +120,7 @@ const App = () => {
       {/* {contacts.length > 1 && (
         <Filter initialValue={filter} onFilterChange={handleFilterChange} />
       )} */}
-    </div>
+    </Container>
   );
 };
 export default App;
