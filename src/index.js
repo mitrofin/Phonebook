@@ -7,6 +7,7 @@ import { BrowserRouter } from 'react-router-dom';
 /* import ReactDOM from 'react-dom/client'; */
 import 'modern-normalize/modern-normalize.css';
 import App from './App';
+import './index.css';
 
 ReactDOM.render(
   <React.StrictMode>
