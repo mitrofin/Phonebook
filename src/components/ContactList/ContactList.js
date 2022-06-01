@@ -2,6 +2,7 @@ import PropTypes from 'prop-types';
 import { useSelector, useDispatch } from 'react-redux';
 /* import actions from '../../redux/contacts/contacts-action'; */
 import s from './ContactList.module.scss';
+import DeleteIcon from '@mui/icons-material/Delete';
 /* import { getFilteredContacts } from '../../redux/contacts/contacts-selectors'; */
 import { contactsSelectors, contactsOperation } from '../../redux/contacts';
 const ContactList = () => {
@@ -40,6 +41,7 @@ const ContactList = () => {
             onClick={() => onDeleteContact(id)}
           >
             Delete
+            <DeleteIcon sx={{ fontSize: 20 }} />
           </button>
         </li>
       ))}
