@@ -2,6 +2,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { contactsSelectors, contactsOperation } from '../../redux/contacts';
+import { BsFillFilePersonFill } from 'react-icons/bs';
 
 import { toast } from 'react-toastify';
 /* import * as yup from 'yup'; */
@@ -106,6 +107,7 @@ export default function ContactForm(/* { onSubmit } */) {
 
       <button type="submit" className={s.submitButton}>
         Add contact
+        <BsFillFilePersonFill className={s.iconButton} />
       </button>
     </form>
   );
