@@ -3,6 +3,7 @@
   padding: 10px;
   width: 500px;
   border-radius: 5px;
+  background-color: rgb(240, 240, 240);
 
   box-shadow: 12px 4px 21px 4px rgba(0, 0, 0, 0.28);
 }
@@ -10,11 +11,15 @@
 .filterLabel {
   display: flex;
   flex-direction: column;
-  /* font-style: italic; */
-  font-weight: 500;
-  color: rgb(160, 76, 76);
+  font-weight: 600;
 }
 .filterInput {
   margin-top: 10px;
+  margin-bottom: 10px;
   outline: none;
+  font-size: 20px;
+  font-weight: 600;
+  background: -webkit-linear-gradient(#00d4ff, #5773f6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
