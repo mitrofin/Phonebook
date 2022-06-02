@@ -4,8 +4,9 @@ import { filterContact } from '../../redux/contacts/contacts-action';
 import { contactsSelectors } from '../../redux/contacts';
 import s from './Filter.module.scss';
 
-export default function Filter(/* { initialValue, onFilterChange } */) {
+export default function Filter() {
   const initialValue = useSelector(contactsSelectors.getFilter);
+  console.log(initialValue);
   const dispatch = useDispatch();
 
   const onFilterChange = e => dispatch(filterContact(e.target.value));
@@ -13,9 +14,8 @@ export default function Filter(/* { initialValue, onFilterChange } */) {
   return (
     <div className={s.inputWrapper}>
       <label className={s.filterLabel}>
-        Find contacts by name:
+        <h5 className={s.filterInput}>Find contacts by name:</h5>
         <input
-          className={s.filterInput}
           type="text"
           name="name"
           value={initialValue}
